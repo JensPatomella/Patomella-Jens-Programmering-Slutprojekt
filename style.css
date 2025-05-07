@@ -4,7 +4,7 @@ html {
 
 #canvas {
     height: 95vh;
-    background-image: url(map1.png);
+    /*background-image: url(map1.png);*/
     background-repeat: no-repeat;
 }
 
