@@ -28,44 +28,16 @@ for (i=0; i<10; i++){
   arrayEnemy.push(nenemy)
 }
 
+//destination kommer vara index av en tile i arrayTiles
 
-function pathWalk(n){
-  if (n.xPos == 990 && n.yPos == 105) {
-    n.turn = 1
-  }
-  if (n.xPos == 990 && n.yPos == 330) {
-    n.turn = 2
-  }
-  if (n.xPos == 1230 && n.yPos == 330) {
-    n.turn = 1
-  }
-  if (n.xPos == 1230 && n.yPos == 480) {
-    n.turn = 0
-  }
-  if (n.xPos == 790 && n.yPos == 480) {
-    n.turn = 3
-  }
-  if (n.xPos == 790 && n.yPos == 240) {
-    n.turn = 0
-  }
-  if (n.xPos == 300 && n.yPos == 240) {
-    n.turn = 3
-  }
-  if (n.xPos == 300 && n.yPos == 80) {
-    n.turn = 0
-  }
-  if (n.xPos == 120 && n.yPos == 80) {
-    n.turn = 1
-  }
-  if (n.xPos == 120 && n.yPos == 390) {
-    n.turn = 2
-  }
-  if (n.xPos == 430 && n.yPos == 390) {
-    n.turn = 1
-  }
-  return n.turn
+function pathWalk(ent, destination){
+  yDif = destination.yCord - ent.yPos
+  xDif = destination.xCord - ent.xPos
+  angle = Math.atan2(xDif, yDif)
+
+  ent.yPos = ent.yPos + ent.speed * Math.sin(angle)
+  ent.xPos = ent.xPos + ent.speed * Math.cos(angle)
 }
-
 
 
 class tile  {
@@ -106,6 +78,22 @@ function pathCreate(){
       arrayTiles[i].path = true
     }
     if  (arrayTiles[i].xCord == 980 && (arrayTiles[i].yCord <= 560 && arrayTiles[i].yCord >= 350)) {
+      arrayTiles[i].used = true
+      arrayTiles[i].path = true
+    }
+    if  (arrayTiles[i].yCord == 560 && (arrayTiles[i].xCord <= 910 && arrayTiles[i].xCord >= 420)) {
+      arrayTiles[i].used = true
+      arrayTiles[i].path = true
+    }
+    if  (arrayTiles[i].xCord == 420 && (arrayTiles[i].yCord <= 560 && arrayTiles[i].yCord >= 70)) {
+      arrayTiles[i].used = true
+      arrayTiles[i].path = true
+    }
+    if  (arrayTiles[i].yCord == 70 && (arrayTiles[i].xCord <= 350 && arrayTiles[i].xCord >= 70)) {
+      arrayTiles[i].used = true
+      arrayTiles[i].path = true
+    }
+    if  (arrayTiles[i].xCord == 70 && (arrayTiles[i].yCord <= 630 && arrayTiles[i].yCord >= 140)) {
       arrayTiles[i].used = true
       arrayTiles[i].path = true
     }
