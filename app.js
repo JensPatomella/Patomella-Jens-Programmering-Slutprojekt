@@ -24,19 +24,25 @@ let tower = {
 arrayTowers = []
 
 for (i=0; i<10; i++){
-  let nenemy = new enemy(2.5, 0, 1370+i*100, 105, 30)
-  arrayEnemy.push(nenemy)
+  arrayEnemy.push(new enemy(2.5, 0, 1400+i*100, 140, 30))
+  
 }
 
 //destination kommer vara index av en tile i arrayTiles
 
 function pathWalk(ent, destination){
-  yDif = destination.yCord - ent.yPos
-  xDif = destination.xCord - ent.xPos
-  angle = Math.atan2(xDif, yDif)
-
-  ent.yPos = ent.yPos + ent.speed * Math.sin(angle)
-  ent.xPos = ent.xPos + ent.speed * Math.cos(angle)
+  destMidY = destination.yCord + destination.size/2
+  destMidX = destination.xCord + destination.size/2
+  entMidY =  ent.yPos + ent.size/2
+  entMidX = ent.xPos + ent.size/2
+  yDif = (destMidY) - (entMidY)
+  xDif = (destMidX) - (entMidX)
+  angle = Math.atan2(yDif, xDif)
+  ent.yPos = ent.yPos + (ent.speed * (Math.sin(angle)))
+  ent.xPos = ent.xPos + (ent.speed * (Math.cos(angle)))
+  if ((entMidY <= destMidY+5 && entMidY >= destMidY-5) && (entMidX <= destMidX+5 && entMidX >= destMidX-5)){
+    ent.turn = ent.turn + 1
+  }
 }
 
 
@@ -104,6 +110,7 @@ arrayTiles = pathCreate()
 console.log(arrayTiles)
 
 
+
 function animate() {
     
   // Rensar gammalt visuellt innehåll
@@ -117,29 +124,29 @@ function animate() {
       ctx.fillStyle = "peru"
 
     ctx.fillRect(tile.xCord, tile.yCord, tile.size, tile.size)
+    
   });
 
-  arrayEnemy.forEach(nenemy => {
-    //left
-    if (pathWalk(nenemy) == 0) {
-      nenemy.xPos -= nenemy.speed
-    }
-    //down
-    if (pathWalk(nenemy) == 1) {
-      nenemy.yPos += nenemy.speed
-    }
-    //right
-    if (pathWalk(nenemy) == 2) {
-      nenemy.xPos += nenemy.speed
-    }
-    //up
-    if (pathWalk(nenemy) == 3) {
-      nenemy.yPos -= nenemy.speed
-    }
-
+  arrayEnemy.forEach(enemy => {
+    if (enemy.turn == 0)
+      pathWalk(enemy, arrayTiles[50])
+    if (enemy.turn == 1)
+      pathWalk(enemy, arrayTiles[90])
+    if (enemy.turn == 2)
+      pathWalk(enemy, arrayTiles[94])
+    if (enemy.turn == 3)
+      pathWalk(enemy, arrayTiles[174])
+    if (enemy.turn == 4)
+      pathWalk(enemy, arrayTiles[166])
+    if (enemy.turn == 5)
+      pathWalk(enemy, arrayTiles[26])
+    if (enemy.turn == 6)
+      pathWalk(enemy, arrayTiles[21])
+    if (enemy.turn == 7)
+      pathWalk(enemy, arrayTiles[181])
 
     ctx.fillStyle = "red"
-    ctx.fillRect(nenemy.xPos, nenemy.yPos, nenemy.size, nenemy.size)
+    ctx.fillRect(enemy.xPos, enemy.yPos, enemy.size, enemy.size)
   
   });
 
