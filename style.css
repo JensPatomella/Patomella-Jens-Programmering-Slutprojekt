@@ -2,10 +2,15 @@ html {
     background-color: grey;
 }
 
+html,body {
+    margin:0;
+    padding:0;
+}
+
 #canvas {
-    height: 95vh;
-    /*background-image: url(map1.png);*/
-    background-repeat: no-repeat;
+    height: 700px;
+    width: 1400px;
+    
 }
 
 #bing {

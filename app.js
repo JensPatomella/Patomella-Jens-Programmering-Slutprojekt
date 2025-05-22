@@ -3,6 +3,11 @@ canvas.width = 1400
 canvas.height = 700
 let ctx = canvas.getContext('2d');
 
+const mouse = {
+  x: undefined,
+  y: undefined
+}
+
 class enemy  {
   constructor(speed, turn, xPos, yPos, size){
   this.speed = speed;
@@ -15,20 +20,25 @@ class enemy  {
 
 arrayEnemy = []
 
-let tower = {
-  type: 0,
-  xPos: 0,
-  yPos: 0,
+class tower  {
+  constructor(type, xCord, yCord, size){
+  this.type = type;
+  this.xCord = xCord;
+  this.yCord = yCord;
+  this.size = size;
+  }
 }
 
 arrayTowers = []
+
+window.addEventListener('click', (event) => {
+  if ()
+})
 
 for (i=0; i<10; i++){
   arrayEnemy.push(new enemy(2.5, 0, 1400+i*100, 140, 30))
   
 }
-
-//destination kommer vara index av en tile i arrayTiles
 
 function pathWalk(ent, destination){
   destMidY = destination.yCord + destination.size/2
@@ -72,35 +82,27 @@ arrayTiles = mapcreate()
 function pathCreate(){
   for (let i = 0; i<arrayTiles.length; i++){
     if (arrayTiles[i].yCord == 140 && (arrayTiles[i].xCord <= 1400 && arrayTiles[i].xCord >= 700)) {
-      arrayTiles[i].used = true
       arrayTiles[i].path = true
     }
     if (arrayTiles[i].xCord == 700 && (arrayTiles[i].yCord == 210 || arrayTiles[i].yCord == 280)) {
-      arrayTiles[i].used = true
       arrayTiles[i].path = true
     }
     if  (arrayTiles[i].yCord == 280 && (arrayTiles[i].xCord <= 980 && arrayTiles[i].xCord >= 770)) {
-      arrayTiles[i].used = true
       arrayTiles[i].path = true
     }
     if  (arrayTiles[i].xCord == 980 && (arrayTiles[i].yCord <= 560 && arrayTiles[i].yCord >= 350)) {
-      arrayTiles[i].used = true
       arrayTiles[i].path = true
     }
     if  (arrayTiles[i].yCord == 560 && (arrayTiles[i].xCord <= 910 && arrayTiles[i].xCord >= 420)) {
-      arrayTiles[i].used = true
       arrayTiles[i].path = true
     }
     if  (arrayTiles[i].xCord == 420 && (arrayTiles[i].yCord <= 560 && arrayTiles[i].yCord >= 70)) {
-      arrayTiles[i].used = true
       arrayTiles[i].path = true
     }
     if  (arrayTiles[i].yCord == 70 && (arrayTiles[i].xCord <= 350 && arrayTiles[i].xCord >= 70)) {
-      arrayTiles[i].used = true
       arrayTiles[i].path = true
     }
     if  (arrayTiles[i].xCord == 70 && (arrayTiles[i].yCord <= 630 && arrayTiles[i].yCord >= 140)) {
-      arrayTiles[i].used = true
       arrayTiles[i].path = true
     }
   } 
@@ -109,7 +111,10 @@ function pathCreate(){
 arrayTiles = pathCreate()
 console.log(arrayTiles)
 
-
+window.addEventListener('mousemove', (event) => {
+  mouse.x = event.clientX
+  mouse.y = event.clientY
+})
 
 function animate() {
     
@@ -122,10 +127,13 @@ function animate() {
       ctx.fillStyle = "green"
     else 
       ctx.fillStyle = "peru"
+    if (tile.used == false && tile.path == false && (mouse.y >= tile.yCord && mouse.y < tile.yCord + 70) && (mouse.x >= tile.xCord && mouse.x < tile.xCord + 70))
+      ctx.fillStyle = "blue"
 
     ctx.fillRect(tile.xCord, tile.yCord, tile.size, tile.size)
     
   });
+
 
   arrayEnemy.forEach(enemy => {
     if (enemy.turn == 0)
